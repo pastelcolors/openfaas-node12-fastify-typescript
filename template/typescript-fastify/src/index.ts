@@ -8,8 +8,6 @@ import { ContextPayload, EventPayload } from '../function/types';
 
 import handler from '../function/handler';
 
-const port: number = Number(process.env.HTTP_PORT) || 3000;
-
 class Event implements EventPayload {
   body: unknown;
   headers: IncomingHttpHeaders;
@@ -108,7 +106,7 @@ SERVER.all('/*', async (req, res) => {
   }
 });
 
-SERVER.listen(port, '0.0.0.0', (err, address) => {
+SERVER.listen(3000, '0.0.0.0', (err, address) => {
   if (err) throw err;
 
   SERVER.log.info(`server listening on ${address}`);
