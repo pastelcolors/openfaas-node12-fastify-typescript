@@ -1,9 +1,9 @@
-import { ContextPayload, EventPayload } from "./types"
+import { ContextPayload, EventPayload } from './types';
 
-export default async (event: EventPayload, context: ContextPayload) => {
+export default async (event: EventPayload, context: ContextPayload): Promise<ContextPayload> => {
   const result = {
-    message: 'Body: ' + JSON.stringify(event.body),
-  }
+    message: `Body: ${JSON.stringify(event.body)}`,
+  };
 
-  return context.code(200).send(result)
-}
+  return context.code(200).send(result);
+};

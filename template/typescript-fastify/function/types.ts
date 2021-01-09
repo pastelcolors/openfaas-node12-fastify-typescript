@@ -1,4 +1,4 @@
-import { IncomingHttpHeaders, OutgoingHttpHeaders } from "http";
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 
 export interface EventPayload {
   body: unknown;

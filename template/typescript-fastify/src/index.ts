@@ -1,5 +1,12 @@
+/* eslint-disable max-classes-per-file */
 import fastify, { FastifyInstance, FastifyRequest } from 'fastify';
-import { Server, IncomingMessage, ServerResponse, IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
+import {
+  Server,
+  IncomingMessage,
+  ServerResponse,
+  IncomingHttpHeaders,
+  OutgoingHttpHeaders,
+} from 'http';
 
 import cors from 'fastify-cors';
 import fastifyHelmet from 'fastify-helmet';
@@ -10,9 +17,13 @@ import handler from '../function/handler';
 
 class Event implements EventPayload {
   body: unknown;
+
   headers: IncomingHttpHeaders;
+
   method: string;
+
   query: unknown;
+
   path: string;
 
   constructor(req: FastifyRequest) {
@@ -26,10 +37,13 @@ class Event implements EventPayload {
 
 class Context implements ContextPayload {
   statusCode: number;
+
   headerValues: OutgoingHttpHeaders;
+
   result: unknown;
+
   error: Error | null;
-    
+
   constructor() {
     // Assumes the default response
     this.statusCode = 200;
@@ -67,7 +81,11 @@ class Context implements ContextPayload {
   }
 }
 
-const SERVER: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify({
+const SERVER: FastifyInstance<
+  Server,
+  IncomingMessage,
+  ServerResponse
+> = fastify({
   logger: process.env.ENABLE_LOGGING === 'true',
 });
 
@@ -98,11 +116,10 @@ SERVER.all('/*', async (req, res) => {
   try {
     const handlerRes = await handler(event, context);
 
-    res.headers(handlerRes.headers).status(handlerRes.statusCode);
+    res.headers(handlerRes.headerValues).status(handlerRes.statusCode);
     return handlerRes.result;
   } catch (err) {
-    res.code(500);
-    return err.toString ? err.toString() : err
+    return res.code(500);
   }
 });
 
