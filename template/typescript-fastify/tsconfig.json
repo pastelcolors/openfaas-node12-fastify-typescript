@@ -1,12 +1,11 @@
 {
-  "exclude": ["dist", "node_modules"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "module": "ESNext",
     "lib": ["ESNext"],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "outDir": "./dist",
     "rootDir": "./",
     "strict": true,
     "noUnusedLocals": true,
