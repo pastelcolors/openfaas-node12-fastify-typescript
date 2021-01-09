@@ -6,7 +6,7 @@ import fastifyHelmet from 'fastify-helmet';
 
 import { ContextPayload, EventPayload } from './types';
 
-import handler from './handler';
+import handler from '../function/handler';
 
 const port: number = Number(process.env.HTTP_PORT) || 3000;
 
