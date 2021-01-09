@@ -1,5 +1,5 @@
 FROM --platform=${TARGETPLATFORM:-linux/amd64} openfaas/of-watchdog:0.7.2 as watchdog
-FROM --platform=${TARGETPLATFORM:-linux/amd64} node:12-alpine as ship
+FROM --platform=${TARGETPLATFORM:-linux/amd64} mhart/alpine-node as ship
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
@@ -20,12 +20,14 @@ RUN mkdir -p /home/app
 # Wrapper/boot-strapper
 WORKDIR /home/app
 COPY package.json ./
-
-# This ordering means the npm installation is cached for the outer function handler.
-RUN npm i
+COPY yarn.lock ./
 
 # Copy outer function handler
-COPY index.js ./
+COPY src/index.ts ./src/index.ts
+
+# Copy required files
+COPY build-src.js ./
+COPY tsconfig.json ./
 
 # COPY function node packages and install, adding this as a separate
 # entry allows caching of npm install
@@ -42,6 +44,11 @@ COPY function/ ./
 # Run any tests that may be available
 RUN npm test
 
+# install npm dependencies and compile
+WORKDIR /home/app/
+RUN yarn install --production
+RUN yarn run build
+
 # Set correct permissions to use non root user
 WORKDIR /home/app/
 
@@ -52,7 +59,7 @@ RUN chown app:app -R /home/app \
 USER app
 
 ENV cgi_headers="true"
-ENV fprocess="node index.js"
+ENV fprocess="node bin/index.js"
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:3000"
 
