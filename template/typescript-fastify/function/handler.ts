@@ -1,3 +1,5 @@
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http'
+
 interface EventPayload {
   body: unknown;
   headers: IncomingHttpHeaders;
