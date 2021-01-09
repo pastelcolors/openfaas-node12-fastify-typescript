@@ -4,7 +4,7 @@ import { Server, IncomingMessage, ServerResponse, IncomingHttpHeaders, OutgoingH
 import cors from 'fastify-cors';
 import fastifyHelmet from 'fastify-helmet';
 
-import { ContextPayload, EventPayload } from './types';
+import { ContextPayload, EventPayload } from '../function/types';
 
 import handler from '../function/handler';
 

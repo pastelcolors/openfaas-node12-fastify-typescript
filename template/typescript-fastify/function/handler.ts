@@ -1,23 +1,4 @@
-import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http'
-
-interface EventPayload {
-  body: unknown;
-  headers: IncomingHttpHeaders;
-  method: string;
-  query: unknown;
-  path: string;
-}
-
-interface ContextPayload {
-  statusCode: number;
-  headerValues: OutgoingHttpHeaders;
-  result: unknown;
-  error: Error | null;
-  code(statusCode?: number): this;
-  headers(headerValues?: OutgoingHttpHeaders): this;
-  send(result: unknown): this;
-  err(error: Error): this;
-}
+import { ContextPayload, EventPayload } from "./types"
 
 export default async (event: EventPayload, context: ContextPayload) => {
   const result = {
