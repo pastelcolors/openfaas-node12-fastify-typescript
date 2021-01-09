@@ -34,9 +34,9 @@ COPY tsconfig.json ./
 
 WORKDIR /home/app/function
 
-COPY function/*.json ./
+COPY function/package.json ./
 
-RUN npm i || :
+RUN yarn install --production || :
 
 # COPY function files and folders
 COPY function/ ./
