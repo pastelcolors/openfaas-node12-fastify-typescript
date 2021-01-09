@@ -5,7 +5,7 @@ esbuild.buildSync({
   entryPoints: [
     './src/index.ts',
   ],
-  outfile: './bin/index.js',
+  outfile: './index.js',
   bundle: true,
   minify: true,
   sourcemap: false,
